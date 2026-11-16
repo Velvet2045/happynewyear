@@ -1,168 +1,183 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#091321">
-<title>Christmas Night · ASCII Fireworks</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050916">
+<title>Christmas Night · Grand Fireworks</title>
+<meta name="description" content="A colorful animated fireworks show of code, stars, skyline and river reflections.">
 <style>
 :root{color-scheme:dark}*{box-sizing:border-box}
-body{margin:0;min-height:100svh;background:radial-gradient(ellipse at 50% 12%,#18293c,#08121f 74%);color:#f2e4d5;font-family:system-ui,sans-serif}
-.page{max-width:1100px;min-height:100svh;margin:auto;padding:28px clamp(12px,4vw,40px) 36px;display:flex;flex-direction:column;align-items:center}
-nav{width:100%;display:flex;align-items:center;justify-content:space-between;gap:15px;color:#a3b5bf;font:11px ui-monospace,Consolas,monospace;letter-spacing:.13em}
-a{color:#d4c7b8;text-decoration:none}a:hover{text-decoration:underline}
-h1{font:400 clamp(33px,6vw,62px)/1.12 Georgia,serif;letter-spacing:-.035em;text-align:center;margin:34px 0 11px}
-.subtitle{text-align:center;color:#99adb9;font:11px ui-monospace,Consolas,monospace;letter-spacing:.14em;margin:0 0 25px}
-.terminal{width:100%;background:#030a13;border:1px solid #3a4c5c;border-radius:10px;overflow:hidden;box-shadow:0 24px 75px #0008}
-.windowbar{height:36px;padding:0 13px;display:flex;align-items:center;gap:7px;background:#142232;border-bottom:1px solid #354456}
-.dot{width:9px;height:9px;border-radius:50%;background:#d5706e}.dot:nth-child(2){background:#d4b570}.dot:nth-child(3){background:#85b89e}
-.filename{color:#91a3b0;margin:auto;transform:translateX(-17px);font:10px ui-monospace,Consolas,monospace}
-.stage{display:flex;justify-content:center;align-items:center;padding:15px 0;overflow:hidden;min-height:230px}
-#scene{margin:0;white-space:pre;line-height:1.16;font:12px/1.16 ui-monospace,Consolas,monospace;font-variant-ligatures:none;user-select:none}
-.actions{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin:24px 0 12px}
-button{background:transparent;color:#f0e1ce;border:1px solid #68798a;font:11px ui-monospace,Consolas,monospace;letter-spacing:.08em;padding:12px 16px;min-width:135px;cursor:pointer}
-button:hover,button:focus-visible{background:#ffffff19;border-color:#f2e5d4}a:focus-visible,button:focus-visible{outline:2px solid #d6c7a5;outline-offset:3px}
-.message{text-align:center;color:#b8c6cc;font-size:13px;line-height:2;word-break:keep-all;margin:10px 0}
-footer{margin-top:auto;padding-top:25px;text-align:center;color:#8195a4;font:10px/1.9 ui-monospace,Consolas,monospace}
-@media(max-width:460px){.page{padding:20px 9px 27px}nav{font-size:9px;letter-spacing:.06em}h1{margin-top:30px}.subtitle{font-size:9px}}
-</style>
-</head>
-<body>
-<div class="page">
-<nav><a href="./">← BACK TO THE CARD</a><span>CHRISTMAS / 2026</span></nav>
-<h1>A night of little lights ✧</h1>
-<p class="subtitle">AN ASCII FIREWORK SHOW OVER THE RIVER</p>
-<section class="terminal" aria-label="ASCII 불꽃놀이">
-<div class="windowbar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="filename">christmas_night.exe</span></div>
-<div class="stage"><pre id="scene" aria-hidden="true">Preparing the night sky...</pre></div>
+body{margin:0;min-height:100svh;background:radial-gradient(ellipse at 50% 24%,#17283b,#060d1b 70%);color:#f4e6da;font-family:system-ui,sans-serif}
+.page{max-width:1100px;min-height:100svh;margin:auto;padding:18px clamp(9px,3vw,36px) 30px;display:flex;align-items:center;flex-direction:column}
+nav{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;font:11px ui-monospace,Consolas,monospace;letter-spacing:.1em;color:#a3b6c6}
+a{color:#c4d9e9;text-decoration:none}a:hover{text-decoration:underline}
+h1{font:400 clamp(32px,5.5vw,62px)/1.15 Georgia,serif;letter-spacing:-.03em;text-align:center;margin:20px 0 8px}
+.subtitle{font:10px/1.6 ui-monospace,Consolas,monospace;letter-spacing:.16em;text-align:center;color:#a1b6c6;margin:0 0 17px}
+.terminal{width:min(100%,950px);border:1px solid #334657;border-radius:12px;background:#030715;overflow:hidden;box-shadow:0 25px 90px #000a,0 0 55px #40709715}
+.bar{height:35px;background:#111d2c;border-bottom:1px solid #2d3c50;display:flex;gap:7px;align-items:center;padding:0 13px}
+.dot{width:9px;height:9px;border-radius:50%;background:#d97075}.dot:nth-child(2){background:#d7b26e}.dot:nth-child(3){background:#88bba3}
+.filename{margin:auto;transform:translateX(-17px);color:#95a4b2;font:10px ui-monospace,Consolas,monospace}
+.stage{position:relative;overflow:hidden}canvas{display:block;width:100%;height:auto;aspect-ratio:12/8}
+.hint{position:absolute;bottom:13px;left:16px;color:#83a1b6;font:10px ui-monospace,Consolas,monospace;pointer-events:none}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:19px 0}
+button{min-width:152px;border:1px solid #69819a;background:#0e1b2a;color:#f0e6d9;border-radius:3px;font:11px ui-monospace,Consolas,monospace;letter-spacing:.08em;padding:12px 17px;cursor:pointer}
+button:hover,button:focus-visible{background:#20384f;border-color:#dfd0bc}
+a:focus-visible,button:focus-visible{outline:2px solid #f5d98c;outline-offset:3px}
+.message{color:#bdcbd4;text-align:center;font-size:13px;line-height:1.9;word-break:keep-all}
+footer{margin-top:auto;padding-top:23px;text-align:center;font:10px/1.7 ui-monospace,Consolas,monospace;color:#8094a5}
+@media(max-width:500px){nav{font-size:9px;letter-spacing:.04em}.page{padding:16px 8px 24px}.hint{font-size:8px}}
+</style></head>
+<body><div class="page">
+<nav><a href="./">← CARD HOME</a><span><a href="./tree.html">TREE ↗</a> · <a href="./christmas.html" aria-current="page">FIREWORKS</a></span></nav>
+<h1>Let the night sparkle ✧</h1>
+<p class="subtitle">A GRAND CHRISTMAS FIREWORK SHOW OVER THE RIVER</p>
+<section class="terminal" aria-label="다채로운 불꽃과 강물 반사 애니메이션">
+<div class="bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="filename">christmas_fireworks.js</span></div>
+<div class="stage"><canvas id="sky" width="1200" height="800" role="img" aria-label="밤하늘의 대형 컬러 불꽃놀이와 도시 야경, 강물 위의 빛 반사"></canvas><span class="hint">✦ AN ORIGINAL CODE-LIGHT SHOW</span></div>
 </section>
-<div class="actions"><button id="more" type="button">✦ MORE FIREWORKS</button><button id="pause" type="button">Ⅱ PAUSE</button></div>
-<p class="message">차가운 겨울밤에도 반짝이는 순간은 늘 있으니까.<br>메리 크리스마스, 그리고 빛나는 새해를 보내길! 🎄</p>
-<footer>AN ORIGINAL BROWSER ASCII ANIMATION · INSPIRED BY
-<a target="_blank" rel="noopener noreferrer" href="https://satpuru.tistory.com/m/entry/%ED%8C%8C%EC%9D%B4%EC%8D%AC-257%EC%A4%84%EB%A1%9C-%ED%84%B0%EB%AF%B8%EB%84%90%EC%97%90-%ED%95%9C%EA%B0%95-%EB%B6%88%EA%BD%83%EB%86%80%EC%9D%B4-%EA%B7%B8%EB%A6%AC%EA%B8%B0-ASCII-%EC%95%84%ED%8A%B8-%EC%BD%94%EB%93%9C">THIS TERMINAL ART</a></footer>
+<div class="actions"><button id="more" type="button">✦ GRAND FINALE</button><button id="pause" type="button">Ⅱ PAUSE</button></div>
+<p class="message">하늘 가득 피어나는 빛처럼,<br>올겨울에도 아름다운 순간들이 가득하길. 메리 크리스마스! 🎄</p>
+<footer>MADE OF STARS & CODE · 2026</footer>
 </div>
 <script>
-(function () {
-  "use strict";
-  var W = 96, H = 34, t = 0;
-  var scene = document.getElementById("scene");
-  var more = document.getElementById("more"), pause = document.getElementById("pause");
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var playing = !reduced;
-  var pixels = new Array(W * H), tones = new Array(W * H);
-  var palette = ["#f2ce81", "#f7a399", "#86d1cb", "#c9a5eb", "#c6e3b0", "#f6e2ce"];
-  var stars = [], snow = [], rockets = [], sparks = [];
-  var random = function (min,max) { return min + Math.random() * (max-min); };
-  var randint = function (min,max) { return Math.floor(random(min,max+1)); };
-  function put(x,y,ch,color) {
-    x = Math.round(x); y = Math.round(y);
-    if(x<0||x>=W||y<0||y>=H)return;
-    var i = y*W+x; pixels[i]=ch; tones[i]=color||"#8298a8";
+(function(){
+"use strict";
+const canvas=document.getElementById("sky"),ctx=canvas.getContext("2d",{alpha:false});
+const W=1200,H=800,horizon=640;
+const colors=["#ffe298","#ff7199","#6ef5db","#8cb7ff","#c69aff","#f9a46e","#a6f5a7"];
+const rand=(a,b)=>a+Math.random()*(b-a);
+const stars=Array.from({length:180},()=>({x:rand(0,W),y:rand(0,horizon-70),r:rand(.4,1.6),phase:rand(0,6)}));
+const snow=Array.from({length:90},()=>({x:rand(0,W),y:rand(0,H),vx:rand(-.2,.3),vy:rand(.15,.65),r:rand(.55,1.6)}));
+let particles=[],rockets=[],flashes=[],time=0,finale=0;
+let playing=!window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function light(x,y,r,color,alpha){
+ ctx.save();ctx.globalAlpha=alpha;
+ const g=ctx.createRadialGradient(x,y,0,x,y,r);
+ g.addColorStop(0,color);g.addColorStop(1,"transparent");ctx.fillStyle=g;
+ ctx.fillRect(x-r,y-r,2*r,2*r);ctx.restore();
+}
+function launch(x,targetY,color){
+ rockets.push({x:x===undefined?rand(130,W-130):x,y:horizon+5,
+   tx:rand(-35,35),vy:rand(-10.5,-8.5),target:targetY===undefined?rand(115,430):targetY,
+   color:color||colors[Math.floor(rand(0,colors.length))],trail:[]});
+}
+function burst(x,y,color,scale){
+ scale=scale||1;
+ flashes.push({x,y,color,life:12*scale});
+ const count=Math.floor(155*scale);
+ for(let i=0;i<count;i++){
+   const a=(i/count)*Math.PI*2+rand(-.04,.04);
+   const ring=i%4===0;
+   const speed=rand(1.5,4.4)*scale*(ring?1.15:1);
+   const tint=i%9===0?"#fff5db":i%6===0?colors[Math.floor(rand(0,colors.length))]:color;
+   particles.push({x,y,px:x,py:y,vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,
+    life:rand(45,90),max:90,color:tint,size:rand(1,2.7),drag:rand(.968,.981),grav:rand(.018,.040)});
+ }
+ // Smaller crackling core
+ for(let i=0;i<40*scale;i++){
+  const a=rand(0,Math.PI*2),speed=rand(.2,2.4);
+  particles.push({x,y,px:x,py:y,vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,
+    life:rand(17,38),max:40,color:"#fff7d4",size:rand(1,2),drag:.96,grav:.028});
+ }
+}
+function advance(){
+ time++;
+ if(finale>0)finale--;
+ const interval=finale>0?9:38;
+ if(time%interval===0)launch();
+ if(time%101===0)launch();
+ for(let i=rockets.length-1;i>=0;i--){
+  const r=rockets[i];r.trail.push({x:r.x,y:r.y});if(r.trail.length>20)r.trail.shift();
+  r.x+=r.tx*.025;r.y+=r.vy;r.vy+=.035;
+  if(r.y<=r.target||r.vy>=0){burst(r.x,r.y,r.color,finale>0?rand(1,1.6):rand(.75,1.25));rockets.splice(i,1);}
+ }
+ for(let i=particles.length-1;i>=0;i--){
+  const p=particles[i];p.px=p.x;p.py=p.y;p.x+=p.vx;p.y+=p.vy;p.vx*=p.drag;p.vy=p.vy*p.drag+p.grav;p.life--;
+  if(p.life<=0||p.y>=horizon+15)particles.splice(i,1);
+ }
+ if(particles.length>3200)particles.splice(0,particles.length-3200);
+ for(let i=flashes.length-1;i>=0;i--){if(--flashes[i].life<=0)flashes.splice(i,1);}
+ for(const s of snow){s.x+=s.vx+Math.sin(time*.02+s.y)*.13;s.y+=s.vy;
+  if(s.y>H){s.y=0;s.x=rand(0,W);}
+ }
+}
+function drawCity(){
+ // skyline, windows, bridge
+ ctx.fillStyle="#0a1726";ctx.fillRect(0,horizon-60,W,64);
+ for(let k=0;k<42;k++){
+   const x=k*31-10,hh=35+((k*31+7)%90),ww=20+(k%3)*8;
+   ctx.fillStyle=k%2?"#101e2d":"#142334";ctx.fillRect(x,horizon-hh,ww,hh);
+   for(let wy=horizon-hh+10;wy<horizon-9;wy+=13)for(let wx=x+5;wx<x+ww-3;wx+=10){
+    if((k+wx+wy)%4!==0){ctx.fillStyle="rgba(255,205,130,.45)";ctx.fillRect(wx,wy,2,3);}
+   }
+ }
+ ctx.beginPath();ctx.moveTo(90,horizon-44);ctx.quadraticCurveTo(460,horizon-160,1110,horizon-44);
+ ctx.strokeStyle="#7d8ea0";ctx.lineWidth=3;ctx.stroke();
+ ctx.beginPath();ctx.moveTo(0,horizon-30);ctx.lineTo(W,horizon-30);
+ ctx.lineWidth=5;ctx.strokeStyle="#a4a6b8";ctx.stroke();
+ for(let x=90;x<1140;x+=65){ctx.strokeStyle="#5e7387";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,horizon-33);ctx.lineTo(x,horizon-60-45*Math.sin(Math.PI*(x-90)/1050));ctx.stroke();}
+}
+function drawWater(){
+ let water=ctx.createLinearGradient(0,horizon,0,H);
+ water.addColorStop(0,"#10243a");water.addColorStop(1,"#050b1a");ctx.fillStyle=water;ctx.fillRect(0,horizon,W,H-horizon);
+ const reflect=particles.filter(p=>p.y<horizon&&p.life>10);
+ for(let y=horizon+5;y<H;y+=6){
+  const z=(y-horizon)/(H-horizon);
+  for(let i=0;i<19;i++){
+    const x=(i*83+(Math.sin(y*.21+time*.03+i)*45)+W)%W;
+    ctx.fillStyle="rgba(91,140,173,"+(0.035+.08*(1-z))+")";
+    ctx.fillRect(x,y,rand(15,55)*z+5,1.5);
   }
-  function line(x,y,str,color) {
-    for(var i=0;i<str.length;i++)put(x+i,y,str.charAt(i),color);
-  }
-  for(var i=0;i<80;i++)stars.push({x:randint(1,94),y:randint(1,18),phase:random(0,7)});
-  for(var j=0;j<70;j++)snow.push({x:random(0,W),y:random(0,H),vx:random(-.1,.1),vy:random(.07,.26)});
-  function launch() {
-    rockets.push({x:random(14,82),y:26,vy:-random(.40,.65),target:random(4,15),
-      color:palette[randint(0,palette.length-1)]});
-  }
-  function explode(x,y,color) {
-    var n=randint(48,75);
-    for(var k=0;k<n;k++){
-      var a=2*Math.PI*k/n + random(-.07,.07), speed=random(.13,.66);
-      sparks.push({x:x,y:y,vx:Math.cos(a)*speed,vy:Math.sin(a)*speed*.72,
-        life:randint(15,31),color:color});
-    }
-  }
-  function background() {
-    for(var i=0;i<stars.length;i++){
-      var a=stars[i];if(Math.sin(t*.12+a.phase)>-.67)put(a.x,a.y,".", "#8498ae");
-    }
-    for(var n=0;n<snow.length;n++)put(snow[n].x,snow[n].y,".", "#c1d7df");
-    var buildings=[[2,8,6],[13,10,10],[25,8,7],[35,9,12],[46,8,9],[56,8,11],[67,7,7],[77,8,10],[87,7,6]];
-    for(var b=0;b<buildings.length;b++){
-      var q=buildings[b], top=27-q[2];
-      for(var x=q[0];x<q[0]+q[1];x++)for(var y=top;y<=27;y++){
-        var lit=(x-q[0])%3===1&&(y-top)%3===1;
-        put(x,y,y===top?"-":lit?":":"|",lit?"#d7b47c":"#41576b");
-      }
-    }
-    for(var x=0;x<W;x++)put(x,28,x%4===0?"=":"-","#7e919e");
-    for(var x=5;x<77;x++){
-      var y=24+Math.round(3*Math.sin((x-5)/72*Math.PI));
-      put(x,y,"=","#c9ad8d");
-      if(x%9===0)for(var yy=y+1;yy<28;yy++)put(x,yy,"|","#8296a0");
-    }
-    for(var y=29;y<H;y++)for(var x=0;x<W;x++)
-      if((x*13+y*9+Math.floor(t/5))%10<4)put(x,y,y%2?"-":"~",y===29?"#617c90":"#36536b");
-    // Tiny decorated Christmas tree on the riverside.
-    for(var row=0;row<7;row++)for(var dx=-row;dx<=row;dx++)
-      if((row+dx)%2===0)put(81+dx,20+row,(row*3+dx)%7===0?"o":"^","#82b99f");
-    put(81,19,"*","#ffe4a5");put(81,27,"|","#ac987c");
-  }
-  function simulate() {
-    t++;
-    if(t%34===0||t%97===0)launch();
-    for(var n=0;n<snow.length;n++){
-      var s=snow[n];s.x+=s.vx+Math.sin(t*.04+s.y)*.03;s.y+=s.vy;
-      if(s.x<0)s.x+=W;if(s.x>=W)s.x-=W;
-      if(s.y>=H){s.y=0;s.x=random(0,W);}
-    }
-    for(var i=rockets.length-1;i>=0;i--){
-      var r=rockets[i];r.y+=r.vy;r.vy+=.006;
-      if(r.y<=r.target||r.vy>=0){explode(r.x,r.y,r.color);rockets.splice(i,1);}
-    }
-    for(var i=sparks.length-1;i>=0;i--){
-      var p=sparks[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.009;p.vx*=.998;p.life--;
-      if(p.life<=0||p.y>=H)sparks.splice(i,1);
-    }
-  }
-  function render() {
-    pixels.fill(" ");tones.fill("#8298a8");background();
-    for(var i=0;i<rockets.length;i++){var r=rockets[i];put(r.x,r.y,"|",r.color);}
-    for(var i=0;i<sparks.length;i++){
-      var p=sparks[i];put(p.x,p.y,p.life>20?"*":p.life>9?"+":".",p.color);
-      if(p.life>18)put(p.x,29+(Math.round(p.y)%4),".",p.color);
-    }
-    if(t>35){line(37,10,"M E R R Y","#e9dccd");line(34,12,"C H R I S T M A S","#e6ada3");}
-    var html="";
-    for(var y=0;y<H;y++){
-      var last="",run="";
-      for(var x=0;x<W;x++){
-        var idx=y*W+x, tone=tones[idx];
-        if(tone!==last){
-          if(run)html+='<span style="color:'+last+'">'+run+'</span>';
-          last=tone;run="";
-        }
-        run+=pixels[idx];
-      }
-      if(run)html+='<span style="color:'+last+'">'+run+'</span>';
-      if(y<H-1)html+="\n";
-    }
-    scene.innerHTML=html;
-  }
-  function size() {
-    var width=document.querySelector(".stage").clientWidth-6;
-    scene.style.fontSize=Math.max(3,Math.min(12,width/(W*.607)))+"px";
-  }
-  more.addEventListener("click",function(){
-    if(!playing){playing=true;pause.textContent="Ⅱ PAUSE";}
-    for(var i=0;i<4;i++)explode(random(15,83),random(4,16),palette[randint(0,palette.length-1)]);
-    render();
-  });
-  pause.addEventListener("click",function(){
-    playing=!playing;pause.textContent=playing?"Ⅱ PAUSE":"▶ PLAY";
-  });
-  window.addEventListener("resize",size);
-  var last=0;
-  function step(time) {
-    if(playing && time-last>67){last=time;simulate();render();}
-    requestAnimationFrame(step);
-  }
-  launch();launch();size();render();
-  if(!playing)pause.textContent="▶ PLAY";
-  requestAnimationFrame(step);
+ }
+ for(let i=0;i<reflect.length;i+=3){
+  const p=reflect[i],depth=(horizon-p.y)/horizon;
+  const yy=horizon+depth*(H-horizon)*.75+rand(-2,2),xx=p.x+Math.sin(yy*.12+time*.04)*13;
+  ctx.globalAlpha=Math.max(0,.13*(p.life/p.max));
+  ctx.fillStyle=p.color;ctx.fillRect(xx-6,yy,rand(12,32),1.7);
+ }
+ ctx.globalAlpha=1;
+}
+function render(){
+ ctx.fillStyle="#030817";ctx.fillRect(0,0,W,H);
+ const bg=ctx.createRadialGradient(W/2,270,40,W/2,350,760);
+ bg.addColorStop(0,"#162441");bg.addColorStop(.6,"#081224");bg.addColorStop(1,"#030817");
+ ctx.fillStyle=bg;ctx.fillRect(0,0,W,horizon);
+ stars.forEach(s=>{ctx.globalAlpha=.25+.55*(.5+.5*Math.sin(time*.028+s.phase));ctx.fillStyle="#d7e7ff";
+  ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;
+ // Colored blooms shine through the night sky
+ flashes.forEach(f=>light(f.x,f.y,220,f.color,Math.min(.24,f.life*.014)));
+ particles.forEach(p=>{
+  const a=Math.max(0,Math.min(1,p.life/p.max));
+  ctx.globalAlpha=a*.5;ctx.strokeStyle=p.color;ctx.lineWidth=p.size*.75;
+  ctx.beginPath();ctx.moveTo(p.px,p.py);ctx.lineTo(p.x,p.y);ctx.stroke();
+  ctx.globalAlpha=a;ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
+ });ctx.globalAlpha=1;
+ rockets.forEach(r=>{
+   for(let i=0;i<r.trail.length;i++){
+     const p=r.trail[i];ctx.globalAlpha=i/r.trail.length*.7;ctx.fillStyle=r.color;
+     ctx.fillRect(p.x,p.y,2.5,5);
+   }
+   ctx.globalAlpha=1;light(r.x,r.y,22,r.color,.6);ctx.fillStyle="#fff6d9";ctx.fillRect(r.x-1.5,r.y-4,3,9);
+ });
+ ctx.globalAlpha=1;
+ drawCity();drawWater();
+ snow.forEach(s=>{ctx.globalAlpha=.25;ctx.fillStyle="#d0e4f8";ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();});
+ ctx.globalAlpha=1;
+ ctx.textAlign="center";ctx.font="600 29px Georgia,serif";ctx.shadowColor="#ffd9a9";ctx.shadowBlur=18;
+ ctx.fillStyle="#fff0d8";ctx.fillText("MERRY CHRISTMAS",W/2,65);ctx.shadowBlur=0;
+ ctx.font="13px Consolas,monospace";ctx.fillStyle="#7e9bab";ctx.textAlign="right";
+ ctx.fillText(playing?"● LIVE / COLOR BURST":"Ⅱ PAUSED",W-20,H-21);
+}
+document.getElementById("more").addEventListener("click",()=>{
+ finale=190;
+ for(let i=0;i<6;i++)launch(rand(160,W-160),rand(130,380),colors[i%colors.length]);
+});
+const pause=document.getElementById("pause");
+pause.addEventListener("click",()=>{playing=!playing;pause.textContent=playing?"Ⅱ PAUSE":"▶ PLAY";render();});
+if(!playing)pause.textContent="▶ PLAY";
+launch(450,270,colors[0]);launch(750,220,colors[1]);render();
+let last=0;
+function frame(now){if(playing&&now-last>=33){last=now;advance();render();}requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
 })();
-</script>
-</body></html>
+</script></body></html>
