@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#091321">
+<title>Christmas Tree · ASCII Lights</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}
+body{margin:0;min-height:100svh;background:radial-gradient(ellipse at 50% 26%,#1c3741,#0b1828 68%,#07111e);color:#f2e4d5;font-family:system-ui,sans-serif}
+.page{max-width:1000px;min-height:100svh;margin:auto;padding:26px clamp(12px,4vw,40px) 35px;display:flex;flex-direction:column;align-items:center}
+nav{width:100%;display:flex;justify-content:space-between;gap:12px;align-items:center;font:11px ui-monospace,Consolas,monospace;letter-spacing:.12em;color:#a3b5bf}
+a{color:#d4c7b8;text-decoration:none}a:hover{text-decoration:underline}
+h1{font:400 clamp(36px,6vw,64px)/1.15 Georgia,serif;letter-spacing:-.04em;text-align:center;margin:34px 0 12px}
+.subtitle{text-align:center;color:#a1b8c2;letter-spacing:.14em;font:11px ui-monospace,Consolas,monospace;margin:0 0 25px}
+.terminal{width:100%;background:#030a13;border:1px solid #3a4c5c;border-radius:10px;overflow:hidden;box-shadow:0 24px 75px #0008}
+.windowbar{height:36px;padding:0 13px;display:flex;gap:7px;align-items:center;background:#142232;border-bottom:1px solid #354456}
+.dot{width:9px;height:9px;border-radius:50%;background:#d5706e}.dot:nth-child(2){background:#d4b570}.dot:nth-child(3){background:#85b89e}
+.filename{color:#91a3b0;margin:auto;transform:translateX(-17px);font:10px ui-monospace,Consolas,monospace}
+.stage{display:flex;align-items:center;justify-content:center;min-height:460px;padding:20px 0;overflow:hidden}
+#scene{margin:0;white-space:pre;font:15px/1.18 ui-monospace,Consolas,monospace;user-select:none;font-variant-ligatures:none}
+.actions{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:24px 0}
+button{cursor:pointer;background:transparent;border:1px solid #68798a;color:#f0e1ce;padding:12px 17px;min-width:145px;font:11px ui-monospace,Consolas,monospace;letter-spacing:.08em}
+button:hover,button:focus-visible{background:#ffffff19;border-color:#f2e5d4}
+a:focus-visible,button:focus-visible{outline:2px solid #d6c7a5;outline-offset:3px}
+.message{color:#b8c6cc;text-align:center;font-size:13px;line-height:2;word-break:keep-all}
+footer{margin-top:auto;padding-top:24px;color:#8195a4;text-align:center;font:10px/1.9 ui-monospace,Consolas,monospace}
+@media(max-width:460px){.page{padding:20px 9px 26px}nav{font-size:9px;letter-spacing:.04em}.stage{min-height:380px}h1{margin-top:30px}.subtitle{font-size:9px}}
+</style>
+</head>
+<body><div class="page">
+<nav><a href="./">← BACK TO THE CARD</a><span>CHRISTMAS / 2026</span></nav>
+<h1>A tree of little lights ✧</h1>
+<p class="subtitle">A TWINKLING ASCII CHRISTMAS TREE</p>
+<section class="terminal" aria-label="반짝이는 ASCII 크리스마스 트리">
+<div class="windowbar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="filename">christmas_tree.exe</span></div>
+<div class="stage"><pre id="scene" role="img" aria-label="눈 내리는 밤에 반짝이는 크리스마스 트리">Preparing Christmas lights...</pre></div>
+</section>
+<div class="actions"><button id="twinkle" type="button">✦ MORE SPARKLE</button><button id="pause" type="button">Ⅱ PAUSE</button></div>
+<p class="message">수많은 작은 불빛이 모여 따뜻한 겨울을 만들듯,<br>당신의 연말에도 반짝이는 순간이 가득하길. 🎄</p>
+<footer>MADE OF LITTLE LIGHTS & CODE · 2026</footer>
+</div>
+<script>
+(function(){
+"use strict";
+var W=51,H=34,t=0,boost=0;
+var scene=document.getElementById("scene"),pause=document.getElementById("pause");
+var reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var playing=!reduced,colors=["#ec908f","#f4d587","#86d1cb","#b5a3e1","#efb5d1"];
+var snow=Array.from({length:55},function(){return{x:Math.random()*W,y:Math.random()*H,speed:.12+Math.random()*.2};});
+var ornaments=[],rng=Math.random;
+for(var row=1;row<=20;row++){
+  for(var dx=-(row-1);dx<=row-1;dx++){
+    if(rng()<.075)ornaments.push({x:25+dx,y:3+row,color:colors[Math.floor(rng()*colors.length)],phase:rng()*6.28});
+  }
+}
+function put(grid,x,y,ch,color){
+  x=Math.round(x);y=Math.round(y);
+  if(x>=0&&x<W&&y>=0&&y<H)grid[y][x]={ch:ch,color:color};
+}
+function render(){
+  var grid=Array.from({length:H},function(){return Array.from({length:W},function(){return{ch:" ",color:"#718a9a"};});});
+  for(var s=0;s<snow.length;s++){
+    var flake=snow[s];put(grid,flake.x,flake.y,t%7===0?"*":".","#819baa");
+  }
+  put(grid,25,2,t%6<3?"*":"+","#ffe0a0");
+  for(var y=1;y<=20;y++){
+    for(var x=-(y-1);x<=y-1;x++){
+      var tip=(x===-(y-1)||x===y-1);
+      put(grid,25+x,3+y,tip?"/":"^",(x+y)%4===0?"#72ac8c":"#4e916e");
+    }
+  }
+  for(var i=0;i<ornaments.length;i++){
+    var o=ornaments[i],lit=Math.sin(t*.25+o.phase)>-(boost>0?.8:.1);
+    put(grid,o.x,o.y,lit?"o":"+ ",lit?o.color:"#39634f");
+  }
+  for(var trunk=24;trunk<=26;trunk++)for(var ty=24;ty<=27;ty++)put(grid,trunk,ty,"|","#ae9272");
+  var gifts=[{x:13,c:"#ef9e9f"},{x:22,c:"#f2d28a"},{x:32,c:"#90becd"}];
+  gifts.forEach(function(g){var rows=["+-----+","|#|#|#|","+-----+"];
+    for(var yy=0;yy<rows.length;yy++)for(var xx=0;xx<rows[yy].length;xx++)put(grid,g.x+xx,28+yy,rows[yy][xx],g.c);
+  });
+  var msg="M E R R Y  C H R I S T M A S";
+  for(var m=0;m<msg.length;m++)put(grid,Math.floor((W-msg.length)/2)+m,32,msg[m],"#f0cfa7");
+  var html="";
+  for(var yy=0;yy<H;yy++){
+    var old="",run="";
+    for(var xx=0;xx<W;xx++){
+      var p=grid[yy][xx];
+      if(p.color!==old){if(run)html+='<span style="color:'+old+'">'+run+'</span>';old=p.color;run="";}
+      run+=p.ch==="&"?"&amp;":p.ch==="<"?"&lt;":p.ch;
+    }
+    if(run)html+='<span style="color:'+old+'">'+run+'</span>';
+    if(yy<H-1)html+="\n";
+  }
+  scene.innerHTML=html;
+}
+function step(){
+  t++;if(boost>0)boost--;
+  snow.forEach(function(s){s.y+=s.speed;if(s.y>=H){s.y=0;s.x=Math.random()*W;}});
+  render();
+}
+function resize(){
+  var available=document.querySelector(".stage").clientWidth-10;
+  scene.style.fontSize=Math.max(5,Math.min(16,available/(W*.615)))+"px";
+}
+document.getElementById("twinkle").addEventListener("click",function(){boost=70;if(!playing){step();}});
+pause.addEventListener("click",function(){playing=!playing;pause.textContent=playing?"Ⅱ PAUSE":"▶ PLAY";});
+window.addEventListener("resize",resize);
+resize();render();
+var last=0;
+function frame(now){if(playing&&now-last>=95){last=now;step();}requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+if(!playing)pause.textContent="▶ PLAY";
+})();
+</script>
+</body></html>
